@@ -1,30 +1,69 @@
+import axios from "axios";
+import { useState, useEffect } from "react";
+import { Link, useParams } from "react-router-dom"
 import styled from "styled-components"
+import SeatItem from "./Seat";
 
-export default function SeatsPage() {
+export default function SeatsPage(props) {
+
+    const {seatsSelected, setSeatsSelected} = props;
+
+    console.log(seatsSelected);
+
+    const {sessaoid} = useParams();
+
+    const [seats, setSeats] = useState(null)
+
+    useEffect(() => {
+        const url = `https://mock-api.driven.com.br/api/v8/cineflex/showtimes/${sessaoid}/seats`;
+        const requisicao = axios.get(url);
+        requisicao.then(resposta => {
+            console.log(resposta);
+            console.log(resposta.data.seats);
+            setSeats(resposta.data.seats);
+        })
+        requisicao.catch(erro => {
+            console.log(erro);
+        })
+    }, [])
+
+    function bookSeats(){
+        const url = 'https://mock-api.driven.com.br/api/v8/cineflex/seats/book-many';
+        const requisicao = axios.post()
+    }
+
+    if(seats === null){
+        return(
+            <PageContainer>
+                Carregando ...
+            </PageContainer>
+        )
+    }
 
     return (
         <PageContainer>
             Selecione o(s) assento(s)
 
             <SeatsContainer>
-                <SeatItem>01</SeatItem>
-                <SeatItem>02</SeatItem>
-                <SeatItem>03</SeatItem>
-                <SeatItem>04</SeatItem>
-                <SeatItem>05</SeatItem>
+                {seats.map(seat =>(
+                <SeatItem key = {seat.id} seat = {seat} seatsSelected={seatsSelected} setSeatsSelected={setSeatsSelected}/>)
+                )}
             </SeatsContainer>
 
             <CaptionContainer>
                 <CaptionItem>
-                    <CaptionCircle />
+                    <CaptionCircle type={'selecionado'}>
+                    </CaptionCircle>
                     Selecionado
                 </CaptionItem>
                 <CaptionItem>
-                    <CaptionCircle />
+                    <CaptionCircle type={'disponível'}>
+                    </CaptionCircle>
                     Disponível
                 </CaptionItem>
                 <CaptionItem>
-                    <CaptionCircle />
+                    <CaptionCircle type={'indisponível'}>
+                    </CaptionCircle>
                     Indisponível
                 </CaptionItem>
             </CaptionContainer>
@@ -35,8 +74,7 @@ export default function SeatsPage() {
 
                 CPF do Comprador:
                 <input placeholder="Digite seu CPF..." />
-
-                <button>Reservar Assento(s)</button>
+                    <button onClick={bookSeats}>Reservar Assento(s)</button>
             </FormContainer>
 
             <FooterContainer>
@@ -96,8 +134,27 @@ const CaptionContainer = styled.div`
     margin: 20px;
 `
 const CaptionCircle = styled.div`
-    border: 1px solid blue;         // Essa cor deve mudar
-    background-color: lightblue;    // Essa cor deve mudar
+    // border: 1px solid #0E7D71;
+    border: ${props => {
+        switch (props.type){
+            case 'selecionado':
+                return '1px solid #0E7D71';
+            case 'disponível':
+                return '1px solid #7B8B99';
+            case 'indisponível':
+                return '1px solid #F7C52B';
+        }
+    }};         // Essa cor deve mudar
+    background-color: ${props => {
+        switch (props.type){
+            case 'selecionado':
+                return '#1AAE9E';
+            case 'disponível':
+                return '#C3CFD9';
+            case 'indisponível':
+                return '#FBE192';
+        }
+    }};    // Essa cor deve mudar
     height: 25px;
     width: 25px;
     border-radius: 25px;
@@ -111,19 +168,6 @@ const CaptionItem = styled.div`
     flex-direction: column;
     align-items: center;
     font-size: 12px;
-`
-const SeatItem = styled.div`
-    border: 1px solid blue;         // Essa cor deve mudar
-    background-color: lightblue;    // Essa cor deve mudar
-    height: 25px;
-    width: 25px;
-    border-radius: 25px;
-    font-family: 'Roboto';
-    font-size: 11px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 5px 3px;
 `
 const FooterContainer = styled.div`
     width: 100%;

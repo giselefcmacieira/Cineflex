@@ -5,10 +5,13 @@ import SessionsPage from "./pages/SessionsPage/SessionsPage";
 import SuccessPage from "./pages/SuccessPage/SuccessPage";
 import axios from "axios";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { useState } from "react";
 
 export default function App() {
 
     axios.defaults.headers.common['Authorization'] = 'KdtB2nZlh0so1u45Z79YkD3J';
+
+    const [seatsSelected, setSeatsSelected] = useState([]);
 
     return (
         <>
@@ -17,8 +20,8 @@ export default function App() {
                 <Routes>
                     <Route path = '/' element={<HomePage />}></Route>
                     <Route path = '/sessoes/:filmeid' element={<SessionsPage />}></Route>
-                    <Route path = '/assentos/:sessaoid' element={<SessionsPage />}></Route>
-                    <Route path = '/sucesso/:sucessoid' element={<SuccessPage />}></Route>
+                    <Route path = '/assentos/:sessaoid' element={<SeatsPage seatsSelected = {seatsSelected} setSeatsSelected={setSeatsSelected} />}></Route>
+                    <Route path = '/sucesso' element={<SuccessPage />}></Route>
                 </Routes>
             </BrowserRouter>
         </>

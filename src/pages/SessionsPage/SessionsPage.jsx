@@ -2,10 +2,11 @@ import styled from "styled-components"
 import { useParams } from "react-router-dom"
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 export default function SessionsPage() {
 
-    const [sessions, setSessions] = useState([]);
+    const [sessions, setSessions] = useState(null);
 
     const {filmeid} = useParams();
 
@@ -20,6 +21,15 @@ export default function SessionsPage() {
         })
     }, [])
 
+    if(sessions === null){
+        return(
+            <PageContainer>
+                Carregando...
+            </PageContainer>
+        );
+    }
+
+
     return (
         <PageContainer>
             Selecione o horário
@@ -28,8 +38,12 @@ export default function SessionsPage() {
                 <SessionContainer key ={session.id}>
                     {`${session.weekday}`} - {`${session.date}`}
                     <ButtonsContainer>
-                        <button>14:00</button>
-                        <button>15:00</button>
+                        {session.showtimes.map(time =>(
+                            <Link to={`/assentos/${time.id}`} key={time.id}>
+                                <button>{time.name}</button>
+                            </Link>
+                        )
+                        )}  
                     </ButtonsContainer>
                 </SessionContainer>
                 )
