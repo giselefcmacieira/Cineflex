@@ -17,9 +17,6 @@ export default function SeatsPage(props) {
 
     const[weekday, setWeekday] = useState('');
 
-    console.log(seatsSelectedNames);
-    console.log(seatsSelected);
-
     useEffect(() => {
         const url = `https://mock-api.driven.com.br/api/v8/cineflex/showtimes/${sessaoid}/seats`;
         const requisicao = axios.get(url);
@@ -51,7 +48,6 @@ export default function SeatsPage(props) {
         })
         requisicao.catch(erro =>{
             console.log(erro.response.data);
-            navigate('/sucesso'); // isso tem que sair daqui
         })
     }
 
