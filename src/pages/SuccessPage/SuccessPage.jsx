@@ -3,12 +3,13 @@ import { useNavigate } from "react-router-dom";
 
 export default function SuccessPage(props) {
 
-    const {nome, setNome, cpf, setCPF, seatsSelected, setSeatsSelected, date, setDate, time, setTime, title, setTitle} = props
+    const {nome, setNome, cpf, setCPF, seatsSelected, setSeatsSelected, seatsSelectedNames, setSeatsSelectedNames, date, setDate, time, setTime, title, setTitle} = props
 
     const navigate = useNavigate();
 
     function voltarParaHome(){
         setSeatsSelected([]);
+        setSeatsSelectedNames([]);
         setNome('');
         setCPF('');
         setDate('');
@@ -29,8 +30,8 @@ export default function SuccessPage(props) {
 
             <TextContainer data-test="seats-info">
                 <strong><p>Ingressos</p></strong>
-                {seatsSelected.map(seat => (
-                <p>Assento {`${seat.name}`}</p>)
+                {seatsSelectedNames.map(seat => (
+                <p key={seat}>Assento {`${seat}`}</p>)
                 )}
             </TextContainer>
 

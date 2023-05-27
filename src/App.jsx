@@ -13,6 +13,8 @@ export default function App() {
 
     const [seatsSelected, setSeatsSelected] = useState([]);
 
+    const [seatsSelectedNames, setSeatsSelectedNames] = useState([]);
+
     const [nome, setNome] = useState('');
 
     const [cpf, setCPF] = useState('');
@@ -30,8 +32,8 @@ export default function App() {
                 <Routes>
                     <Route path = '/' element={<HomePage />}></Route>
                     <Route path = '/sessoes/:filmeid' element={<SessionsPage />}></Route>
-                    <Route path = '/assentos/:sessaoid' element={<SeatsPage seatsSelected = {seatsSelected} setSeatsSelected={setSeatsSelected} nome={nome} setNome={setNome} cpf={cpf} setCPF={setCPF} date={date} setDate={setDate} time={time} setTime={setTime} title={title} setTitle={setTitle}/>}></Route>
-                    <Route path = '/sucesso' element={<SuccessPage nome={nome} setNome={setNome} cpf={cpf} setCPF={setCPF} seatsSelected = {seatsSelected} setSeatsSelected={setSeatsSelected} date={date} setDate={setDate} time={time} setTime={setTime} title={title} setTitle={setTitle}/>}></Route>
+                    <Route path = '/assentos/:sessaoid' element={<SeatsPage seatsSelected = {seatsSelected} setSeatsSelected={setSeatsSelected} seatsSelectedNames={seatsSelectedNames} setSeatsSelectedNames={setSeatsSelectedNames} nome={nome} setNome={setNome} cpf={cpf} setCPF={setCPF} date={date} setDate={setDate} time={time} setTime={setTime} title={title} setTitle={setTitle}/>}></Route>
+                    <Route path = '/sucesso' element={<SuccessPage nome={nome} setNome={setNome} cpf={cpf} setCPF={setCPF} seatsSelected = {seatsSelected} setSeatsSelected={setSeatsSelected} seatsSelectedNames={seatsSelectedNames} setSeatsSelectedNames={setSeatsSelectedNames} date={date} setDate={setDate} time={time} setTime={setTime} title={title} setTitle={setTitle}/>}></Route>
                 </Routes>
             </BrowserRouter>
         </>

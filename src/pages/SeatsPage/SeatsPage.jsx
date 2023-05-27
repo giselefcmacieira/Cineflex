@@ -7,7 +7,7 @@ import SeatItem from "./Seat";
 export default function SeatsPage(props) {
     const navigate = useNavigate();
 
-    const {seatsSelected, setSeatsSelected, nome, setNome, cpf, setCPF, date, setDate, time, setTime, title, setTitle} = props;
+    const {seatsSelected, setSeatsSelected, seatsSelectedNames, setSeatsSelectedNames, nome, setNome, cpf, setCPF, date, setDate, time, setTime, title, setTitle} = props;
 
     const {sessaoid} = useParams();
 
@@ -17,11 +17,14 @@ export default function SeatsPage(props) {
 
     const[weekday, setWeekday] = useState('');
 
+    console.log(seatsSelectedNames);
+    console.log(seatsSelected);
+
     useEffect(() => {
         const url = `https://mock-api.driven.com.br/api/v8/cineflex/showtimes/${sessaoid}/seats`;
         const requisicao = axios.get(url);
         requisicao.then(resposta => {
-            console.log(resposta.data.day.date);
+            console.log(resposta.data.seats);
             setSeats(resposta.data.seats);
             setPosterURL(resposta.data.movie.posterURL);
             setTitle(resposta.data.movie.title);
@@ -66,7 +69,7 @@ export default function SeatsPage(props) {
 
             <SeatsContainer>
                 {seats.map(seat =>(
-                <SeatItem key = {seat.id} seat = {seat} seatsSelected={seatsSelected} setSeatsSelected={setSeatsSelected}/>)
+                <SeatItem key = {seat.id} seat = {seat} seatsSelected={seatsSelected} setSeatsSelected={setSeatsSelected} seatsSelectedNames={seatsSelectedNames} setSeatsSelectedNames={setSeatsSelectedNames}/>)
                 )}
             </SeatsContainer>
 

@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 export default function SeatItem(props){
 
-    const {seat, seatsSelected, setSeatsSelected} = props;
+    const {seat, seatsSelected, setSeatsSelected, seatsSelectedNames, setSeatsSelectedNames,} = props;
 
     const [selected, setSeleted] = useState('não');
 
@@ -14,19 +14,30 @@ export default function SeatItem(props){
         }
         if(availability && selected === 'não'){
             setSeleted('sim');
-            const novaArray = [...seatsSelected];
-            novaArray.push({id: seat.id, name: seat.name});
-            setSeatsSelected(novaArray);
+            const novaArrayid = [...seatsSelected];
+            novaArrayid.push(seat.id);
+            setSeatsSelected(novaArrayid);
+            const novaArrayName = [...seatsSelectedNames];
+            novaArrayName.push(seat.name);
+            setSeatsSelectedNames(novaArrayName);
         }
         if(availability && selected === 'sim'){
             setSeleted('não');
-            const newArray = [];
+            const newArrayid = [];
             for(let i = 0; i < seatsSelected.length; i++){
                 if(seatsSelected[i] !== seat.id){
-                    newArray.push(seatsSelected[i]);
+                    newArrayid.push(seatsSelected[i]);
                 }
             }
-            setSeatsSelected(newArray);
+            setSeatsSelected(newArrayid);
+
+            const newArrayName = [];
+            for(let i = 0; i<seatsSelectedNames.length; i++){
+                if(seatsSelectedNames[i] !== seat.name){
+                    newArrayName.push(seatsSelectedNames[i]);
+                }
+            }
+            setSeatsSelectedNames(newArrayName);
         }
     }
     
