@@ -91,6 +91,7 @@ export default function SeatsPage(props) {
             <FormContainer onSubmit={bookSeats}>
                 <label htmlFor='campoNome'>Nome do Comprador:</label>
                 <input required 
+                data-test="client-name"
                 type='text' 
                 id= 'campoNome'
                 value = {nome}
@@ -99,15 +100,16 @@ export default function SeatsPage(props) {
                 />
                 <label htmlFor='campoCPF'>CPF do Comprador:</label>
                 <input required 
+                data-test="client-cpf"
                 type='number' 
                 id='campoCPF'
                 value = {cpf}
                 onChange = {e => setCPF(e.target.value)}
                 placeholder="Digite seu CPF..." />
-                <button type='submit'>Reservar Assento(s)</button>
+                <button data-test="book-seat-btn" type='submit'>Reservar Assento(s)</button>
             </FormContainer>
 
-            <FooterContainer>
+            <FooterContainer data-test="footer">
                 <div>
                     <img src={posterURL} alt="poster" />
                 </div>

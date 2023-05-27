@@ -32,7 +32,7 @@ export default function SeatItem(props){
     
 
     return(
-        <SeatItemm available = {seat.isAvailable} selected = {selected} onClick = {() => selectSeat(seat.isAvailable)}>
+        <SeatItemm data-test="seat" available = {seat.isAvailable} selected = {selected} onClick = {() => selectSeat(seat.isAvailable)}>
             {`${seat.name}`}
         </SeatItemm>
     );   
