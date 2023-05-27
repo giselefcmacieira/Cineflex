@@ -8,13 +8,20 @@ export default function SessionsPage() {
 
     const [sessions, setSessions] = useState(null);
 
+    const [urlPoster, setURLPoster] = useState('');
+
+    const [title, setTitle] = useState('');
+
     const {filmeid} = useParams();
 
     useEffect(() => {
         const url = `https://mock-api.driven.com.br/api/v8/cineflex/movies/${filmeid}/showtimes`;
         const requisicao = axios.get(url);
         requisicao.then(resposta => {
+            console.log(resposta.data.title);
             setSessions(resposta.data.days);
+            setURLPoster(resposta.data.posterURL);
+            setTitle(resposta.data.title);
         })
         requisicao.catch(erro =>{
             console.log(erro);
@@ -53,10 +60,10 @@ export default function SessionsPage() {
 
             <FooterContainer>
                 <div>
-                    <img src={"https://br.web.img2.acsta.net/pictures/22/05/16/17/59/5165498.jpg"} alt="poster" />
+                    <img src={urlPoster} alt="poster" />
                 </div>
                 <div>
-                    <p>Tudo em todo lugar ao mesmo tempo</p>
+                    <p>{`${title}`}</p>
                 </div>
             </FooterContainer>
 

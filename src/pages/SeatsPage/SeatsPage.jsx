@@ -15,15 +15,26 @@ export default function SeatsPage(props) {
 
     const [cpf, setCPF] = useState('');
 
-    const [seats, setSeats] = useState(null)
+    const [seats, setSeats] = useState(null);
+
+    const [posterURL, setPosterURL] = useState('');
+    
+    const[title, setTitle] = useState('');
+
+    const[weekday, setWeekday] = useState('');
+
+    const[time, setTime] = useState('');
 
     useEffect(() => {
         const url = `https://mock-api.driven.com.br/api/v8/cineflex/showtimes/${sessaoid}/seats`;
         const requisicao = axios.get(url);
         requisicao.then(resposta => {
-            console.log(resposta);
-            console.log(resposta.data.seats);
+            console.log(resposta.data.name);
             setSeats(resposta.data.seats);
+            setPosterURL(resposta.data.movie.posterURL);
+            setTitle(resposta.data.movie.title);
+            setWeekday(resposta.data.day.weekday);
+            setTime(resposta.data.name);
         })
         requisicao.catch(erro => {
             console.log(erro);
@@ -82,14 +93,16 @@ export default function SeatsPage(props) {
 
             <FormContainer onSubmit={bookSeats}>
                 <label htmlFor='campoNome'>Nome do Comprador:</label>
-                <input type='text' 
+                <input required 
+                type='text' 
                 id= 'campoNome'
                 value = {nome}
                 onChange = {e => setNome(e.target.value)}
                 placeholder="Digite seu nome..." 
                 />
                 <label htmlFor='campoCPF'>CPF do Comprador:</label>
-                <input type='number' 
+                <input required 
+                type='number' 
                 id='campoCPF'
                 value = {cpf}
                 onChange = {e => setCPF(e.target.value)}
@@ -99,11 +112,11 @@ export default function SeatsPage(props) {
 
             <FooterContainer>
                 <div>
-                    <img src={"https://br.web.img2.acsta.net/pictures/22/05/16/17/59/5165498.jpg"} alt="poster" />
+                    <img src={posterURL} alt="poster" />
                 </div>
                 <div>
-                    <p>Tudo em todo lugar ao mesmo tempo</p>
-                    <p>Sexta - 14h00</p>
+                    <p>{`${title}`}</p>
+                    <p>{`${weekday}`} - {`${time}`}</p>
                 </div>
             </FooterContainer>
 
