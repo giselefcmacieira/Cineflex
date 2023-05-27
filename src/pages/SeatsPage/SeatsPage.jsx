@@ -7,34 +7,27 @@ import SeatItem from "./Seat";
 export default function SeatsPage(props) {
     const navigate = useNavigate();
 
-    const {seatsSelected, setSeatsSelected} = props;
+    const {seatsSelected, setSeatsSelected, nome, setNome, cpf, setCPF, date, setDate, time, setTime, title, setTitle} = props;
 
     const {sessaoid} = useParams();
-
-    const [nome, setNome] = useState('');
-
-    const [cpf, setCPF] = useState('');
 
     const [seats, setSeats] = useState(null);
 
     const [posterURL, setPosterURL] = useState('');
-    
-    const[title, setTitle] = useState('');
 
     const[weekday, setWeekday] = useState('');
-
-    const[time, setTime] = useState('');
 
     useEffect(() => {
         const url = `https://mock-api.driven.com.br/api/v8/cineflex/showtimes/${sessaoid}/seats`;
         const requisicao = axios.get(url);
         requisicao.then(resposta => {
-            console.log(resposta.data.name);
+            console.log(resposta.data.day.date);
             setSeats(resposta.data.seats);
             setPosterURL(resposta.data.movie.posterURL);
             setTitle(resposta.data.movie.title);
             setWeekday(resposta.data.day.weekday);
             setTime(resposta.data.name);
+            setDate(resposta.data.day.date);
         })
         requisicao.catch(erro => {
             console.log(erro);
@@ -52,6 +45,10 @@ export default function SeatsPage(props) {
         const requisicao = axios.post(url, seatsBooking);
         requisicao.then(resposta => {
             navigate('/sucesso');
+        })
+        requisicao.catch(erro =>{
+            console.log(erro.response.data);
+            navigate('/sucesso'); // isso tem que sair daqui
         })
     }
 

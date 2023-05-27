@@ -1,31 +1,46 @@
 import styled from "styled-components"
+import { useNavigate } from "react-router-dom";
 
-export default function SuccessPage() {
+export default function SuccessPage(props) {
 
+    const {nome, setNome, cpf, setCPF, seatsSelected, setSeatsSelected, date, setDate, time, setTime, title, setTitle} = props
+
+    const navigate = useNavigate();
+
+    function voltarParaHome(){
+        setSeatsSelected([]);
+        setNome('');
+        setCPF('');
+        setDate('');
+        setTime('');
+        setTitle('');
+        navigate('/');
+    }
+    
     return (
         <PageContainer>
             <h1>Pedido feito <br /> com sucesso!</h1>
 
             <TextContainer>
                 <strong><p>Filme e sessão</p></strong>
-                <p>Tudo em todo lugar ao mesmo tempo</p>
-                <p>03/03/2023 - 14:00</p>
+                <p>{`${title}`}</p>
+                <p>{`${date}`} - {`${time}`}</p>
             </TextContainer>
 
             <TextContainer>
                 <strong><p>Ingressos</p></strong>
-                <p>Assento 01</p>
-                <p>Assento 02</p>
-                <p>Assento 03</p>
+                {seatsSelected.map(seat => (
+                <p>Assento {`${seat.name}`}</p>)
+                )}
             </TextContainer>
 
             <TextContainer>
                 <strong><p>Comprador</p></strong>
-                <p>Nome: Letícia Chijo</p>
-                <p>CPF: 123.456.789-10</p>
+                <p>Nome: {`${nome}`}</p>
+                <p>CPF: {`${cpf}`}</p>
             </TextContainer>
 
-            <button>Voltar para Home</button>
+            <button onClick={voltarParaHome}>Voltar para Home</button>
         </PageContainer>
     )
 }

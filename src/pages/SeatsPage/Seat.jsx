@@ -15,7 +15,7 @@ export default function SeatItem(props){
         if(availability && selected === 'não'){
             setSeleted('sim');
             const novaArray = [...seatsSelected];
-            novaArray.push(seat.id);
+            novaArray.push({id: seat.id, name: seat.name});
             setSeatsSelected(novaArray);
         }
         if(availability && selected === 'sim'){
